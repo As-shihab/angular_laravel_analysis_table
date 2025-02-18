@@ -1,0 +1,281 @@
+<ui5-bar design="Footer">
+  <div slot="startContent">
+    <h5 class="font-bold text-slate-600 py-2">Product List</h5>
+  </div>
+  <div slot="endContent" class="flex-column mr-4 flex w-full d-flex items-center justify-center samples-margin">
+    <ui5-input [(ngModel)]="SearchText" (input)="FilterData()"
+      class="samples-margin w-full samples-responsive-margin-bottom" show-clear-icon
+      placeholder="Enter search criteria ..." value="Input" slot="endContent" icon="search"></ui5-input>
+  </div>
+
+  <ui5-button class="w-[230px]" (click)="addform = true" slot="endContent" design="Emphasized" icon="add-product">Add
+    Product</ui5-button>
+</ui5-bar>
+
+
+<div  style=" overflow: auto;">
+
+  <ui5-table [loadingDelay]="0" class="h-[70vh] 2xl:h-[80vh]" id="table" style="" [loading]="isloading">
+
+    <div slot="nodata" name="NoData" class="w-100">
+      <ui5-table-row *ngFor="let index of getRowIndexes()"> </ui5-table-row>
+    </div>
+   
+    <ui5-illustrated-message
+
+      *ngIf="AllProducts?.value == ''"
+      class="border-none shadow-none"
+      slot="nodata" name="NoData"
+      
+      ></ui5-illustrated-message>
+
+    <ui5-table-header-row slot="headerRow" sticky>
+      <ui5-table-header-cell width="90px" style="text-align: center" class="border text-center px-3 py-1" id="produtCol">
+        <span class="font-bold">Serial</span>
+      </ui5-table-header-cell>
+      <ui5-table-header-cell class="border text-left px-3 py-1" id="produtCol">
+        <span class="font-bold">Product</span>
+      </ui5-table-header-cell>
+  
+      <ui5-table-header-cell class="border text-left px-3 py-1" id="produtCol">
+        <span class="font-bold">Product Type</span>
+      </ui5-table-header-cell>
+  
+      <ui5-table-header-cell class="border text-left px-3 py-1 font-bold" id="supplierCol">
+        Supplier
+      </ui5-table-header-cell>
+      <ui5-table-header-cell class="border text-left px-3 font-bold py-1" id="dimensionsCol">
+        Dimensions
+      </ui5-table-header-cell>
+      <ui5-table-header-cell class="border text-left font-bold px-3 py-1" id="weightCol">
+        Weight
+      </ui5-table-header-cell>
+      <ui5-table-header-cell class="border text-left font-bold px-3 py-1" id="priceCol">
+        Price
+      </ui5-table-header-cell>
+  
+      <ui5-table-header-cell class="border text-left font-bold px-3 py-1" id="priceCol">
+        Stock
+      </ui5-table-header-cell>
+  
+      <ui5-table-header-cell class="border text-left font-bold px-3 py-1" id="priceCol" width="160px">
+        Action
+      </ui5-table-header-cell>
+    </ui5-table-header-row>
+  
+    <ui5-table-row class="text-center rounded-sm" *ngFor="
+    let product of AllProducts.value
+      | paginate
+        : {
+            itemsPerPage: pageSize,
+            currentPage: page,
+            totalItems: count
+          };
+    let i = index 
+  ">
+
+  <ui5-table-cell class="px-3 py-1 border text-center">
+    <ui5-label>
+      <b>{{i+page *20 -10 -9}}</b>
+    </ui5-label>
+  </ui5-table-cell>
+  <ui5-table-cell class="border px-3 py-1">
+    <ui5-label>
+      <b>{{ product?.productname }}</b>
+    </ui5-label>
+  </ui5-table-cell>
+
+  <ui5-table-cell class="border px-3 py-1">
+    <ui5-label>
+      {{ product?.producttype }}
+    </ui5-label>
+  </ui5-table-cell>
+
+  <ui5-table-cell class="border text-left px-3 py-1"><ui5-label>{{ product?.supplier }}</ui5-label></ui5-table-cell>
+  <ui5-table-cell class="border text-left px-3 py-1"><ui5-label>{{ product?.demination }}</ui5-label></ui5-table-cell>
+  <ui5-table-cell class="border text-left px-3 py-1">
+    <ui5-label style="color: #2b7c2b">
+      <b>{{ product?.weight }}</b>
+      <span class="text-xs"> Gm</span>
+    </ui5-label>
+  </ui5-table-cell>
+  <ui5-table-cell class="border text-left px-3 py-1">
+    <ui5-label>
+      <b>${{ product?.price }}</b>
+    </ui5-label>
+  </ui5-table-cell>
+
+  <ui5-table-cell class="border text-left px-3 py-1">
+    <ui5-label>
+      <b>{{ product?.isstock ? "Available" : "Stock Out" }}</b>
+    </ui5-label>
+  </ui5-table-cell>
+
+  <ui5-table-cell class="border text-left px-3 py-1">
+    <ui5-label class="gap-2 d-flex">
+      <ui5-button (click)="Edit(product)" icon="sap-icon://edit"></ui5-button>
+
+      <ui5-button (click)="Remove(product.id)" design="Negative" icon="delete"></ui5-button>
+      <ui5-button design="Positive" [routerLink]="['/view/', product.id]" class="mx-1" icon="show"></ui5-button>
+    </ui5-label>
+  </ui5-table-cell>
+</ui5-table-row>
+<ui5-table-row *ngFor="let index of getRowIndexes() ">
+
+
+  <ui5-table-cell class="px-3 py-1 border text-center">
+    <ui5-label>
+      <b></b>
+    </ui5-label>
+  </ui5-table-cell>
+  <ui5-table-cell class="border px-3 py-1">
+    <ui5-label>
+      <b></b>
+    </ui5-label>
+  </ui5-table-cell>
+
+  <ui5-table-cell class="border px-3 py-1">
+    <ui5-label>
+  
+    </ui5-label>
+  </ui5-table-cell>
+
+  <ui5-table-cell class="border text-left px-3 py-1"><ui5-label></ui5-label></ui5-table-cell>
+  <ui5-table-cell class="border text-left px-3 py-1"><ui5-label></ui5-label></ui5-table-cell>
+  <ui5-table-cell class="border text-left px-3 py-1">
+    <ui5-label style="color: #2b7c2b">
+      <b></b>
+      <span class="text-xs"></span>
+    </ui5-label>
+  </ui5-table-cell>
+  <ui5-table-cell class="border text-left px-3 py-1">
+    <ui5-label>
+      <b></b>
+    </ui5-label>
+  </ui5-table-cell>
+
+  <ui5-table-cell class="border text-left px-3 py-1">
+    <ui5-label>
+      <b></b>
+    </ui5-label>
+  </ui5-table-cell>
+
+  <ui5-table-cell class="border text-left px-3 py-1">
+    <ui5-label class="gap-2 d-flex">
+  
+    </ui5-label>
+  </ui5-table-cell>
+
+</ui5-table-row>
+<!-- playground-fold-end -->
+  </ui5-table>
+</div>
+<div class="py-3" *ngIf="!isloading">
+  <pagination-controls class="py-2 mt-3" (pageChange)="onPageChange($event)"></pagination-controls>
+</div>
+
+<!-- add product -->
+
+<ui5-dialog class="w-2/4" #addproduct="ui5Dialog" [open]="addform">
+  <ui5-bar slot="header" design="Header">
+    <ui5-title level="H5" slot="startContent"> Add new product</ui5-title>
+    <ui5-button class="dialogCloser" (click)="addform = false" design="Transparent" id="closeDialogButton"
+      slot="endContent" icon="decline"></ui5-button>
+  </ui5-bar>
+
+  <!-- add prodcut content
+    -->
+  <ui5-message-strip *ngIf="Validate" design="Critical" hide-close-button>
+    {{ Validate && Validate }}
+  </ui5-message-strip>
+
+  <div class="px-4 mt-3 w-full gap-3">
+    <div class="flex gap-2 w-full">
+      <div class="flex-column flex w-full flex-col samples-margin">
+        <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+          Product Name
+        </ui5-label>
+        <ui5-input [(ngModel)]="ProductObj.ProductName" class="w-full border" id="myInput" placeholder="Enter your Name"
+          required [value]="ProductObj.ProductName"></ui5-input>
+      </div>
+
+      <div class="flex-column flex flex-col w-full samples-margin">
+        <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+          Product Type
+        </ui5-label>
+        <ui5-select [value]="ProductObj.ProductType" [(ngModel)]="ProductObj.ProductType" class="w-full">
+          <ui5-option>Phone</ui5-option>
+          <ui5-option>Tablet</ui5-option>
+          <ui5-option> Desktop</ui5-option>
+        </ui5-select>
+      </div>
+    </div>
+
+    <div class="flex mt-3 gap-2">
+      <div class="flex-column flex w-full flex-col samples-margin">
+        <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+          Supplier
+        </ui5-label>
+        <ui5-input [(ngModel)]="ProductObj.Supplier" [value]="ProductObj.Supplier" class="w-full" id="myInput"
+          placeholder="Enter your Name" required></ui5-input>
+      </div>
+
+      <div class="flex-column flex flex-col w-full samples-margin">
+        <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+          Demination
+        </ui5-label>
+        <ui5-select [value]="ProductObj?.Demination" [(ngModel)]="ProductObj.Demination" class="w-full">
+          <ui5-option icon="iphone">3x 12x 2a</ui5-option>
+          <ui5-option icon="iphone">6x 12y 8a</ui5-option>
+          <ui5-option icon="iphone">8x 12p 6a</ui5-option>
+        </ui5-select>
+      </div>
+    </div>
+
+    <div class="flex mt-3 gap-2">
+      <div class="flex-column flex w-full flex-col samples-margin">
+        <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+          Weight
+        </ui5-label>
+        <ui5-input [(ngModel)]="ProductObj.Weight" [value]="ProductObj.Weight" class="w-full" id="myInput"
+          placeholder="Enter your Name" required></ui5-input>
+      </div>
+
+      <div class="flex-column flex flex-col w-full samples-margin">
+        <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+          Price
+        </ui5-label>
+        <ui5-input [value]="ProductObj.Price" [(ngModel)]="ProductObj.Price" class="w-full" id="myInput"
+          placeholder="Enter your Name" required></ui5-input>
+      </div>
+    </div>
+  </div>
+
+  <!-- end product section -->
+
+  <div slot="footer" class="flex gap-3" style="
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      padding: 0.25rem 1rem;
+    ">
+    <ui5-button (click)="AddProduct()" icon="add" design="Emphasized">{{
+      isloading ? "Adding ..." : "Add "
+      }}</ui5-button>
+    <ui5-button (click)="addform = false">Close</ui5-button>
+  </div>
+</ui5-dialog>
+
+<ui5-dialog [open]="isadded" header-text="Positive" state="Positive">
+  <p>Product Addedd Successfully</p>
+  <div slot="footer" style="
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      padding: 0.25rem 1rem;
+    ">
+    <ui5-button (click)="isadded = false">Close</ui5-button>
+  </div>
+</ui5-dialog>
+
+<app-edit-product [productId]="listId" [EditableData]="GetEditableValue" [isopenEdit]="isopenpopup"></app-edit-product>

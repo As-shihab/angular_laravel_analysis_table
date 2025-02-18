@@ -1,0 +1,99 @@
+
+<ui5-dialog
+  id="dialog"
+  class="2xl:w-[38%] w-2/5"
+  [open]="isedit"
+  header-text="Edit Order"
+>
+  <section class="login-form flex flex-col gap-2">
+    <ui5-message-strip *ngIf="Validation_alert" (click)="Validation_alert=false" design="Critical">Fill all the fields</ui5-message-strip>
+    <div class="flex flex-col gap-2 2xl:w-full">
+      <ui5-label for="username" class="mb-1" required show-colon
+        >Select Product</ui5-label
+      >
+
+      <ui5-combobox
+        (selection-change)="ProductName($event)"
+        class="w-full"
+        placeholder="Enter value"
+        [value]="EditableData?.productname"
+        [loading]="Get_Products? false : true"
+      >
+        <ui5-cb-item
+          *ngFor="let product of Get_Products?.value; let i = index"
+          text="{{ product.productname }}"
+          [id]="product.id"
+          
+          additionalText="${{product.price}}"
+        ></ui5-cb-item>
+      </ui5-combobox>
+
+      <!-- <ui5-select [(ngModel)]="Order_Details.productname" class="w-full">
+        <ui5-option [value]="" icon="iphone">Phone</ui5-option>
+        <ui5-option icon="ipad">Tablet</ui5-option>
+        <ui5-option icon="laptop" selected>Desktop</ui5-option>
+      </ui5-select> -->
+    </div>
+    <div class="flex flex-col">
+      <ui5-label for="username" class="mb-1" required show-colon
+        >Select Customer</ui5-label
+      >
+
+      <ui5-combobox
+        class="w-full"
+        [value]="EditableData?.customername"
+        (selection-change)="CustomerName($event)"
+        placeholder="Enter value"
+        [loading]="Get_Products? false : true"
+      >
+        <ui5-cb-item
+          *ngFor="let customer of Get_Customers?.value; let i = index"
+          [text]="customer.firstname"
+          [id]="customer.id"
+          [additionalText]="customer.email"
+        ></ui5-cb-item>
+      </ui5-combobox>
+    </div>
+
+    <div class="flex flex-col">
+      <ui5-label for="username" class="mb-1" required show-colon
+        >Select Date</ui5-label
+      >
+      <div class="datepicker-width w-full">
+        <ui5-date-picker
+        [value]="EditableData?.order_date"
+          [(ngModel)]="Order_Details.order_date"
+          class="w-full"
+          id="myDatepicker2"
+          placeholder="Delivery Date..."
+        >
+          <div slot="valueStateMessage">
+            The value is not valid. Please provide valid value
+          </div>
+        </ui5-date-picker>
+      </div>
+    </div>
+
+    <div class="flex flex-col">
+    
+    </div>
+  </section>
+  <ui5-toolbar slot="footer">
+    <ui5-toolbar-button
+      class="dialogCloser"
+      design="Emphasized"
+      (click)="SaveEdit()"
+     [text]="IsLoading?'Saving..':'Save'"
+    
+    >
+
+    </ui5-toolbar-button>
+    <ui5-toolbar-button
+     (click)="Close()"
+      class="dialogCloser"
+      design="Transparent"
+      text="Cancel"
+    >
+    </ui5-toolbar-button>
+  </ui5-toolbar>
+</ui5-dialog>

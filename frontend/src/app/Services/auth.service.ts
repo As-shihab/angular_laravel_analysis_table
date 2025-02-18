@@ -1,0 +1,34 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { lodata_url } from '../environments/globalurl';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+Signup : any = {
+  name:"",
+  email:"",
+  password:""
+}
+
+
+
+  constructor(private http:HttpClient) { }
+
+
+  Create_Customer(customer : any){
+   return this.http.post(lodata_url + "Customars" , customer);
+  }
+
+  Get_Customars(){
+    return this.http.get(lodata_url+"Customars"+"?orderby=created_at desc");
+  }
+
+  Delete_Customer(id: any){
+    return this.http.delete(lodata_url+ "Customars/"+ id);
+  }
+
+
+
+}

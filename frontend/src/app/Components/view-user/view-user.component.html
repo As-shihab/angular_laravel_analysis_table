@@ -1,0 +1,131 @@
+
+
+
+
+
+<ui5-bar design="Footer" >
+    <div slot="startContent">
+      <h5 class="font-bold text-slate-600 py-2">Users List</h5>
+    </div>
+    <div
+      slot="endContent"
+      class="flex-column mr-4 flex w-full d-flex items-center justify-center samples-margin"
+    >
+      <ui5-input
+
+        
+        class="samples-margin w-full samples-responsive-margin-bottom"
+        show-clear-icon
+        placeholder="Type to find user ..."
+     
+        slot="endContent"
+        icon="search"
+      ></ui5-input>
+    </div>
+  
+    <ui5-button
+      class="w-[230px]"
+     
+      slot="endContent"
+      design="Emphasized"
+      icon="add-employee"
+      (click)="addUser.open=true"
+      >Create User</ui5-button
+    >
+  </ui5-bar>
+
+
+  <!-- view users -->
+
+
+<div class="mt-2 grid 2xl:grid-cols-4 gap-2 grid-cols-3">
+
+    <div class="card  text-center flex justify-center items-center p-2" *ngFor="let profile of Customars?.value; let i = index; ">
+        <ui5-avatar initials="d" size="L"></ui5-avatar>
+         
+        <b class="text-2xl">{{profile?.firstname}} </b>
+<span class="text-xs">[ {{profile?.role}} ]</span>
+
+        <div class="px-4 mt-3 text-left w-full">
+           <span>FullName: {{profile?.firstname}} {{profile?.lastname}} </span><br>
+           <span>Email: {{profile?.email}}</span>
+           <div class="flex items-center mt-2">
+            <ui5-button
+            (click)="DeleteCustomer(profile.id)"
+            >{{IsLoading ? "Deleting" :"Delete"}}</ui5-button>
+           </div>
+     
+        </div>
+    </div>
+
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- add user  -->
+
+<ui5-dialog id="dialog" class="2xl:w-[38%] " #addUser="ui5Dialog" [open]="IsNewUser" header-text="Register Form">
+    <section class="login-form flex flex-col gap-2 ">
+     <div class="flex gap-2 2xl:w-full  items-center">
+        <div class="flex w-full flex-col">
+            <ui5-label for="username" class="mb-1" required show-colon>FirstName</ui5-label>
+            <ui5-input class="w-full" [value]="user.firstname" [(ngModel)]="user.firstname" placeholder="FirstName" id="username"></ui5-input>
+        </div>
+        <div class="flex w-full flex-col">
+            <ui5-label for="username" class="mb-1" required show-colon>LastName</ui5-label>
+            <ui5-input class="w-full" [value]="user.lastname" [(ngModel)]="user.lastname" placeholder="LastName" id="username"></ui5-input>
+        </div>
+     </div>
+        <div class="flex flex-col">
+            <ui5-label for="username" class="mb-1" required show-colon>Email</ui5-label>
+            <ui5-input class="w-full" [value]="user.email" [(ngModel)]="user.email" placeholder="Type Email" id="username"></ui5-input>
+        </div>
+        <div class="flex flex-col">
+            <ui5-label for="username" class="mb-1" required show-colon>Password</ui5-label>
+            <ui5-input class="w-full"  placeholder="Type Password" id="username"></ui5-input>
+        </div>
+        <div class="flex flex-col">
+            <ui5-label for="username"  class="mb-1" required show-colon>Role</ui5-label>
+            <ui5-select class="w-full" [value]="user.role" [(ngModel)]="user.role">
+                <ui5-option additional-text="CT">Customar</ui5-option>
+                <ui5-option additional-text="EM">Employee</ui5-option>
+                <ui5-option additional-text="AD">Admin</ui5-option>
+               
+            </ui5-select>
+        </div>
+    </section>
+    <ui5-toolbar slot="footer">
+        <ui5-toolbar-button
+            class="dialogCloser"
+            design="Emphasized"
+            text="Submit"
+            (click)="AddUser()"
+        >
+        </ui5-toolbar-button>
+        <ui5-toolbar-button
+        (click)="IsNewUser= false"
+            class="dialogCloser"
+            design="Transparent"
+            text="Cancel"
+        >
+        </ui5-toolbar-button>
+    </ui5-toolbar>
+</ui5-dialog>
+  

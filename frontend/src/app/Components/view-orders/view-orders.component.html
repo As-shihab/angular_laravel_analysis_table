@@ -1,0 +1,255 @@
+<ui5-bar design="Footer">
+  <div slot="startContent">
+    <h5 class="font-bold text-slate-600 py-2">Order List</h5>
+  </div>
+  <div slot="endContent" class="flex-column mr-4 flex w-full d-flex items-center justify-center samples-margin">
+    <ui5-input class="samples-margin w-full samples-responsive-margin-bottom" show-clear-icon
+      placeholder="Enter search criteria ..." slot="endContent" icon="search"></ui5-input>
+  </div>
+
+  <ui5-button class="w-[230px]" (click)="IsOder = true" slot="endContent" design="Emphasized" icon="cart-4">New
+    Order</ui5-button>
+</ui5-bar>
+{{page}}
+<div style=" overflow: auto;">
+
+  <ui5-table [loadingDelay]="0" [loading]="IsLoading ? true : false" id="table" overflow-mode="Popin" [loadingDelay]="0"
+    [noDataText]="'Loading'" class="h-[70vh] 2xl:h-[80vh]" id="table" [loading]="IsLoading">
+
+    <div slot="nodata" name="NoData" class="w-100">
+      <ui5-table-row *ngFor="let index of getRowIndexes()"> </ui5-table-row>
+    </div>
+
+    <ui5-illustrated-message *ngIf="Get_Orders?.value == ''" slot="nodata" name="NoData"></ui5-illustrated-message>
+
+    <ui5-table-header-row slot="headerRow" sticky>
+      <ui5-table-header-cell width="90px" style="text-align: center" class="border text-center px-3 py-1"
+      id="produtCol">
+      <span class="font-bold">Serials</span>
+    </ui5-table-header-cell>
+      <ui5-table-header-cell width="90px" style="text-align: center" class="border text-center px-3 py-1"
+        id="produtCol">
+        <span class="font-bold">Porduct Id</span>
+      </ui5-table-header-cell>
+      <ui5-table-header-cell class="border text-left px-3 py-1" id="produtCol">
+        <span class="font-bold">ProductName</span>
+      </ui5-table-header-cell>
+
+      <ui5-table-header-cell class="border text-left px-3 py-1" id="produtCol">
+        <span class="font-bold">Customer</span>
+      </ui5-table-header-cell>
+
+      <ui5-table-header-cell class="border text-left px-3 py-1 font-bold" id="supplierCol">
+        Delivary
+      </ui5-table-header-cell>
+      <ui5-table-header-cell class="border text-left px-3 font-bold py-1" id="dimensionsCol">
+        Payment
+      </ui5-table-header-cell>
+      <ui5-table-header-cell class="border text-left font-bold px-3 py-1" id="weightCol">
+        Date
+      </ui5-table-header-cell>
+      <ui5-table-header-cell class="border text-left font-bold px-3 py-1" id="priceCol">
+        Price
+      </ui5-table-header-cell>
+
+      <ui5-table-header-cell class="border text-left font-bold px-3 py-1" id="priceCol">
+        Stock
+      </ui5-table-header-cell>
+
+      <ui5-table-header-cell class="border text-left font-bold px-3 py-1" id="priceCol" width="160px">
+        Action
+      </ui5-table-header-cell>
+    </ui5-table-header-row>
+
+    <ui5-table-row *ngFor="
+     let order of Get_Orders?.value
+      | paginate
+        : {
+            itemsPerPage: pageSize,
+            currentPage: page,
+            totalItems: count
+          };
+          
+      let i = index
+      " class="text-center rounded-sm">
+       <ui5-table-cell class="px-3 py-1 border text-center">
+        <ui5-label>
+          <b>{{i+page *20 -10 -9}}</b>
+        </ui5-label>
+      </ui5-table-cell>
+      <ui5-table-cell class="px-3 py-1 border text-center">
+        <ui5-label>
+          <b>{{ order?.product_id }}</b>
+        </ui5-label>
+      </ui5-table-cell>
+      <ui5-table-cell class="border px-3 py-1">
+        <ui5-label>
+          <b>{{ order?.productname }}</b>
+        </ui5-label>
+      </ui5-table-cell>
+
+      <ui5-table-cell class="border px-3 py-1">
+        <ui5-label>{{ order?.customername }} </ui5-label>
+      </ui5-table-cell>
+
+      <ui5-table-cell class="border text-left px-3 py-1"><ui5-label>{{
+          order.delivary ? "Delivared" : "Pending"
+          }}</ui5-label></ui5-table-cell>
+      <ui5-table-cell class="border text-left px-3 py-1"><ui5-label>{{
+          order.delivary ? "Delivared" : "Pending"
+          }}</ui5-label></ui5-table-cell>
+      <ui5-table-cell class="border text-left px-3 py-1">
+        <ui5-label style="color: #2b7c2b">
+          <b></b>
+          {{ order?.order_date }}
+        </ui5-label>
+      </ui5-table-cell>
+      <ui5-table-cell class="border text-left px-3 py-1">
+        <ui5-label>
+          <b>{{ order?.price }}</b>
+        </ui5-label>
+      </ui5-table-cell>
+
+      <ui5-table-cell class="border text-left px-3 py-1">
+        <ui5-label>
+          <b>{{ order.stock ? "Available" : "Stock Out" }}</b>
+        </ui5-label>
+      </ui5-table-cell>
+
+      <ui5-table-cell class="border text-left px-3 py-1">
+        <ui5-label class="gap-2 d-flex">
+          <ui5-button (click)="EditOrder(order)" icon="sap-icon://edit"></ui5-button>
+
+          <ui5-button (click)="DeleteOrder(order.id)" design="Negative" icon="delete"></ui5-button>
+          <ui5-button [routerLink]="'/orders/' + order.id" design="Positive" class="mx-1" icon="show"></ui5-button>
+        </ui5-label>
+      </ui5-table-cell>
+    </ui5-table-row>
+    <ui5-table-row *ngFor="let index of getRowIndexes() ">
+      <ui5-table-cell class="px-3 py-1 border text-center">
+        <ui5-label>
+          <b></b>
+        </ui5-label>
+      </ui5-table-cell>
+
+      <ui5-table-cell class="px-3 py-1 border text-center">
+        <ui5-label>
+          <b></b>
+        </ui5-label>
+      </ui5-table-cell>
+      <ui5-table-cell class="border px-3 py-1">
+        <ui5-label>
+          <b></b>
+        </ui5-label>
+      </ui5-table-cell>
+
+      <ui5-table-cell class="border px-3 py-1">
+        <ui5-label>
+
+        </ui5-label>
+      </ui5-table-cell>
+
+      <ui5-table-cell class="border text-left px-3 py-1"><ui5-label></ui5-label></ui5-table-cell>
+      <ui5-table-cell class="border text-left px-3 py-1"><ui5-label></ui5-label></ui5-table-cell>
+      <ui5-table-cell class="border text-left px-3 py-1">
+        <ui5-label style="color: #2b7c2b">
+          <b></b>
+          <span class="text-xs"></span>
+        </ui5-label>
+      </ui5-table-cell>
+      <ui5-table-cell class="border text-left px-3 py-1">
+        <ui5-label>
+          <b></b>
+        </ui5-label>
+      </ui5-table-cell>
+
+      <ui5-table-cell class="border text-left px-3 py-1">
+        <ui5-label>
+          <b></b>
+        </ui5-label>
+      </ui5-table-cell>
+
+      <ui5-table-cell class="border text-left px-3 py-1">
+        <ui5-label class="gap-2 d-flex">
+
+        </ui5-label>
+      </ui5-table-cell>
+
+    </ui5-table-row>
+    <!-- playground-fold-end -->
+  </ui5-table>
+</div>
+
+
+<!-- paginator -->
+<app-paginator (GetRows)="GetRows($event)"  (SentPageNumber)="CurrentPages($event)" [PageSize]="pageSize"
+  [AllProductLength]="Get_Orders?.value.length"></app-paginator>
+<!-- end paginator -->
+
+<!-- add new orders -->
+
+<ui5-dialog id="dialog" class="2xl:w-[38%] w-2/5" [open]="IsOder" header-text="Order Product">
+  <section class="login-form flex flex-col gap-2">
+    <ui5-message-strip *ngIf="Validation_alert" (click)="Validation_alert = false" design="Critical">Warning
+      MessageStrip</ui5-message-strip>
+    <div class="flex flex-col gap-2 2xl:w-full">
+      <ui5-label for="username" class="mb-1" required show-colon>Select Product</ui5-label>
+
+      <ui5-combobox (selection-change)="ProductName($event)" class="w-full" placeholder="Enter value"
+        [value]="Order_Details.productname" [loading]="Get_Products ? false : true">
+        <ui5-cb-item *ngFor="let product of Get_Products?.value; let i = index" text="{{ product.productname }}"
+          [id]="product.id" additionalText="${{ product.price }}"></ui5-cb-item>
+      </ui5-combobox>
+
+
+    </div>
+    <div class="flex flex-col">
+      <ui5-label for="username" class="mb-1" required show-colon>Select Customer</ui5-label>
+
+      <ui5-combobox class="w-full" [value]="Order_Details.customername" (selection-change)="CustomerName($event)"
+        placeholder="Enter value" [loading]="Get_Products ? false : true">
+        <ui5-cb-item *ngFor="let customer of Get_Customers?.value; let i = index" [text]="customer.firstname"
+          [id]="customer.id" [additionalText]="customer.email"></ui5-cb-item>
+      </ui5-combobox>
+    </div>
+
+    <div class="flex flex-col">
+      <ui5-label for="username" class="mb-1" required show-colon>Select Date</ui5-label>
+      <div class="datepicker-width w-full">
+        <ui5-date-picker [(ngModel)]="Order_Details.order_date" class="w-full" id="myDatepicker2"
+          placeholder="Delivery Date...">
+          <div slot="valueStateMessage">
+            The value is not valid. Please provide valid value
+          </div>
+        </ui5-date-picker>
+      </div>
+    </div>
+
+    <div class="flex flex-col"></div>
+  </section>
+  <ui5-toolbar slot="footer">
+    <ui5-toolbar-button class="dialogCloser" design="Emphasized" [text]="IsLoading ? 'Working..' : 'Order Now'"
+      (click)="Order()">
+    </ui5-toolbar-button>
+    <ui5-toolbar-button (click)="IsOder = false" class="dialogCloser" design="Transparent" text="Cancel">
+    </ui5-toolbar-button>
+  </ui5-toolbar>
+</ui5-dialog>
+
+<!-- succcss dialog -->
+
+<ui5-dialog [open]="IsDeleted" header-text="Positive" state="Positive">
+  <p>Deleted Successfully</p>
+  <div slot="footer" style="
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      padding: 0.25rem 1rem;
+    ">
+    <div></div>
+
+    <ui5-button (click)="IsDeleted = false">Close</ui5-button>
+  </div>
+</ui5-dialog>
+
+<app-edit-order [EditableData]="EditData" [isedit]="IsEditOrder"></app-edit-order>

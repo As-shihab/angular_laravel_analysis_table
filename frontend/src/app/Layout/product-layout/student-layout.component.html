@@ -1,0 +1,40 @@
+
+<div class=" h-[90vh] 2xl:h-[95vh] px-2  d-flex gap-2  mt-2 ">
+   
+      <ui5-side-navigation  *ngIf="isSidbar" class=" rounded-lg">
+        <ui5-side-navigation-item routerLink="/" text="All Product" icon="product">
+         
+        </ui5-side-navigation-item>
+        <ui5-side-navigation-item  routerLink="users" text="Users List" icon="account">
+         
+        </ui5-side-navigation-item>
+
+       
+
+        <ui5-side-navigation-item routerLink="orders" text="View Orders" icon="cart">
+         
+        </ui5-side-navigation-item>
+      
+        <ui5-side-navigation-item
+          slot="fixedItems"
+          text="Useful Links"
+          icon="chain-link"
+        >
+          <ui5-side-navigation-sub-item
+            text="External Link"
+            
+            target="_blank"
+          ></ui5-side-navigation-sub-item>
+        </ui5-side-navigation-item>
+        <ui5-side-navigation-item
+          slot="fixedItems"
+          text="History"
+          icon="history"
+        ></ui5-side-navigation-item>
+      </ui5-side-navigation>
+ 
+
+    <div class="view  border p-3 shadow-sm relative rounded-lg w-full  ">
+       <router-outlet/>
+    </div>
+</div>

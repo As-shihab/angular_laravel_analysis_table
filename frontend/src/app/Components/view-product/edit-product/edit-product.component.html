@@ -1,0 +1,87 @@
+<ui5-dialog class="w-2/3 2xl:w-2/4 " [open]="isopenEdit"  #dialog="ui5Dialog" header-text="Edit Product">
+
+    <div class="px-4 mt-3 grid gap-3">
+        <div class="flex gap-2">
+            <div class="flex-column flex w-full flex-col samples-margin">
+                <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+                    Product Name
+                </ui5-label>
+                <ui5-input [value]="EditableData?.productname" name="productname"  [(ngModel)]="ProductObj.productname" class="w-full border border-sky-300"
+                    id="myInput" placeholder="Enter your Name" required></ui5-input>
+            </div>
+
+            <div class="flex-column flex flex-col w-full samples-margin">
+                <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+                    Product Type
+                </ui5-label>
+                <ui5-combobox [value]="EditableData?.producttype" [(ngModel)]="ProductObj.producttype" class="w-full" placeholder="Enter value">
+                    <ui5-cb-item text="Phone"></ui5-cb-item>
+                    <ui5-cb-item text="Tablet"></ui5-cb-item>
+                    <ui5-cb-item text="Desktop"></ui5-cb-item>
+                   
+                </ui5-combobox>
+            </div>
+
+        </div>
+
+
+        <div class="flex gap-2">
+            <div class="flex-column flex w-full flex-col samples-margin">
+                <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+                    Supplier
+                </ui5-label>
+                <ui5-input [value]="EditableData?.supplier" name="supplier" [(ngModel)]="ProductObj.supplier" class="w-full" id="myInput"
+                    placeholder="Enter your Name" required></ui5-input>
+            </div>
+
+            <div class="flex-column flex flex-col w-full samples-margin">
+                <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+                    Demination
+                </ui5-label>
+                <ui5-select [value]="EditableData?.demination"  name="demination" [(ngModel)]="ProductObj.demination" class="w-full">
+                    <ui5-option icon="iphone">3x 12x 2a</ui5-option>
+                    <ui5-option icon="iphone">6x 12y 8a</ui5-option>
+                    <ui5-option icon="iphone">8x 12p 6a</ui5-option>
+                </ui5-select>
+            </div>
+
+        </div>
+
+
+        <div class="flex gap-2">
+            <div class="flex-column flex w-full flex-col samples-margin">
+                <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+                    Weight
+                </ui5-label>
+                <ui5-input [value]="EditableData?.weight" name="weight" [(ngModel)]="ProductObj.weight" class="w-full" id="myInput"
+                    placeholder="Enter your Name" required></ui5-input>
+            </div>
+
+            <div class="flex-column flex flex-col w-full samples-margin">
+                <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+                    Price
+                </ui5-label>
+                <ui5-input [value]="EditableData?.price" [(ngModel)]="ProductObj.price" class="w-full" id="myInput" name="price"
+                    placeholder="Enter your price" required></ui5-input>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <div slot="footer"
+        style="display: flex; align-items: center; justify-content: end; width: 100%; box-sizing: border-box;">
+        <ui5-button (click)="SaveProduct()" design="Emphasized" style="min-width: 4rem;">
+          Save
+        </ui5-button>
+        <ui5-button (click)="CloseEdit()" style="margin: 0 0 0 0.5rem; min-width: 4rem;">
+            Close
+        </ui5-button>
+    </div>
+</ui5-dialog>
+
+

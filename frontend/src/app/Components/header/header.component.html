@@ -1,0 +1,149 @@
+<div class="shadow-sm">
+
+
+
+
+
+
+
+
+  <ui5-bar design="Header" class="px-3 ">
+
+    
+  <ui5-icon
+  class="samples-margin cursor-pointer"
+  name="menu"
+  (click)="Menu()"
+  slot="startContent"
+  style="width:1.4rem;height:1.4rem;"
+></ui5-icon>
+
+
+   
+
+
+
+    <div slot="endContent" (click)="isDialog = !isDialog">
+
+
+
+
+
+
+
+      <ui5-button class="" id="btn2" (click)="menuAdditionalText.open=true">
+        <ui5-avatar initials="XS" color-scheme="Accent1" size="XS"></ui5-avatar>
+      </ui5-button>
+
+      
+
+      <ui5-menu opener="btn2" #menuAdditionalText="ui5Menu">
+        <ui5-menu-item (click)="login.open=true" text="Login" icon="Employee" additionalText="auth login" class="rounded-lg shadow-sm">
+          
+        </ui5-menu-item>
+        <ui5-menu-item text="SignUp" (click)="signup.open=true" icon="Employee" additionalText="auth signup" class="rounded-lg shadow-sm">
+        </ui5-menu-item>
+
+        <ui5-menu-separator></ui5-menu-separator>
+        <ui5-menu-item text="Services" icon="open-folder"></ui5-menu-item>
+       
+        <ui5-menu-separator></ui5-menu-separator>
+        <ui5-menu-item text="Preferences" icon="action-settings"></ui5-menu-item>
+        <ui5-menu-separator></ui5-menu-separator>
+        <ui5-menu-item text="About Us" icon="journey-arrive" additional-text="terms"></ui5-menu-item>
+        <ui5-menu-separator></ui5-menu-separator>
+      </ui5-menu>
+
+
+
+
+    </div>
+
+
+<!-- 
+    <div class="flex gap-2 ">
+      <ui5-button class="border rounded-lg px-1 ">Tabels</ui5-button>
+      <ui5-button>Services</ui5-button>
+      <ui5-button>Employee</ui5-button>
+    </div> -->
+
+
+  </ui5-bar>
+
+
+
+  <!-- login component -->
+
+
+
+  <ui5-dialog #login="ui5Dialog" header-text="Login to admin System">
+
+
+    <div class="flex-column  flex ">
+      <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+        Enter Email
+      </ui5-label>
+      <ui5-input id="myInput" class="w-full" placeholder="Enter your Name" required></ui5-input>
+    </div>
+    <div class="flex-column mt-3 flex">
+      <ui5-label class="samples-big-margin-right" for="myPassword" required showColon>
+        Enter Password
+      </ui5-label>
+      <ui5-input id="myPassword" type="Password" class="w-full" placeholder="Enter Password to login"
+        required></ui5-input>
+    </div>
+
+
+
+    <div slot="footer"
+      style="display: flex; align-items: center; justify-content: end; width: 100%; box-sizing: border-box;">
+      <ui5-button design="Emphasized" style="min-width: 4rem;">
+        Login
+      </ui5-button>
+      <ui5-button (click)="login.open=false" style="margin: 0 0 0 0.5rem; min-width: 4rem;">
+        Close
+      </ui5-button>
+    </div>
+  </ui5-dialog>
+
+  <!-- signup component -->
+
+
+  <ui5-dialog #signup="ui5Dialog" header-text="Login to admin System">
+
+    <div class="flex-column  flex ">
+      <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+        Enter Name
+      </ui5-label>
+      <ui5-input id="name" [(ngModel)]="SignUpObj.name" class="w-full" placeholder="Enter your Name" required></ui5-input>
+    </div>
+
+    <div class="flex-column mt-2  flex ">
+      <ui5-label class="samples-big-margin-right" for="myInput" required showColon>
+        Enter Email
+      </ui5-label>
+      <ui5-input id="email" [(ngModel)]="SignUpObj.email"  class="w-full" placeholder="Enter your " required></ui5-input>
+    </div>
+    <div class="flex-column mt-2 flex">
+      <ui5-label class="samples-big-margin-right"  for="myPassword" required showColon>
+        Enter Password
+      </ui5-label>
+      <ui5-input id="myPassword" [(ngModel)]="SignUpObj.Password" type="Password" class="w-full" placeholder="Enter Password to login"
+        required></ui5-input>
+    </div>
+
+
+
+    <div slot="footer"
+      style="display: flex; align-items: center; justify-content: end; width: 100%; box-sizing: border-box;">
+      <ui5-button (click)="Signup()" design="Emphasized" style="min-width: 4rem;">
+        SignUp
+      </ui5-button>
+      <ui5-button (click)="signup.open=false" style="margin: 0 0 0 0.5rem; min-width: 4rem;">
+        Close
+      </ui5-button>
+    </div>
+  </ui5-dialog>
+
+
+</div>
