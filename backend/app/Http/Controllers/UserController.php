@@ -1,46 +1,53 @@
 <?php
-
 namespace App\Http\Controllers;
-
-use App\Models\Product;
-use App\Models\User;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
-class UserController extends Controller
-
-{
-
-    public function register(Request $request)
-    {
-        return response()->json($request);
-        $validate = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required | max:255',
-                'email' => 'required | email',
-                'password' => 'required | min:6'
-            ]
-        );
-
-        if($validate->fails()){
-
-         return response()->json($validate->messages());
-        }
-
-         $register= User::create($request);
-
-         $token = $register->createToken($register->name);
-
-         return response()->json([
-            'token'=>$token
-         ]);
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Exception;
+class UserController extends Controller{
 
 
-    }
 
-    public function login(Request $request){
-        dd($request->all());
-        return response()->json($request);
+    public function register(Request $request){
+ 
+   try{
+    $validator = Validator::make($request->all(), [
+        "name"=>"required | string",
+        "email"=>"required | email | unique:users",
+        "password"=>"required | min:6"
+      ]);
+
+     if($validator->fails()){
+        return response()->json([
+            "error"=>$validator->errors()
+        ]);
+     }
+
+
+     $user = new User();
+     $user->name = $request->name;
+     $user->email= $request->email;
+     $user->password = Hash::make($request->password);
+
+     $user->save();
+     $token = $user->createToken($user->name)->plainTextToken;
+     return response()->json([
+        "message"=>"User created suceesfully",
+        "user"=>$user,
+        "token"=>$token
+     ]);
+
+   }
+   catch(Expextation $e){
+return response()->json([
+    "error"=>$e->getMessage()
+]);
+   }
+
+  
+
+  
+
     }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lodata_url } from '../environments/globalurl';
+import { lodata_url , api } from '../environments/globalurl';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +11,11 @@ Signup : any = {
   email:"",
   password:""
 }
-
-
-
   constructor(private http:HttpClient) { }
+  api = api;
+  post(path : string , data: any ){
+    return this.http.post( api+path , data);
+  }
 
 
   Create_Customer(customer : any){

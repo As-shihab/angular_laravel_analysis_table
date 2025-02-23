@@ -9,5 +9,6 @@ return [
     'allowed_headers' => ['*'], // Allow all headers or specify required headers
     'exposed_headers' => [],
     'max_age' => 0, // Max age for preflight requests
-    'supports_credentials' => false, // Set to true if credentials are required
+    'supports_credentials' => false,
+     'Access-Control-Allow-Origin'=> 'http://localhost:4200' // Set to true if credentials are required
 ];

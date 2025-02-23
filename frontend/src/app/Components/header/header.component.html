@@ -116,6 +116,7 @@
         Enter Name
       </ui5-label>
       <ui5-input id="name" [(ngModel)]="SignUpObj.name" class="w-full" placeholder="Enter your Name" required></ui5-input>
+      <span class="text-red-500">{{Message?.name&&Message.name}}</span>
     </div>
 
     <div class="flex-column mt-2  flex ">
@@ -128,7 +129,7 @@
       <ui5-label class="samples-big-margin-right"  for="myPassword" required showColon>
         Enter Password
       </ui5-label>
-      <ui5-input id="myPassword" [(ngModel)]="SignUpObj.Password" type="Password" class="w-full" placeholder="Enter Password to login"
+      <ui5-input id="myPassword" [(ngModel)]="SignUpObj.password" type="Password" class="w-full" placeholder="Enter Password to login"
         required></ui5-input>
     </div>
 
