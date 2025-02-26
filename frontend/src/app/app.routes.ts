@@ -8,6 +8,8 @@ import { ViewOneComponent } from './Components/view-product/view-one-product/vie
 import { ViewUserComponent } from './Components/view-user/view-user.component';
 import { ViewOrdersComponent } from './Components/view-orders/view-orders.component';
 import { ViewOneOrderComponent } from './Components/view-orders/view-one-order/view-one-order.component';
+import { AuthGuard } from './authgured.guard';
+
 export const routes: Routes = [
   {
     path: '',
@@ -17,10 +19,11 @@ export const routes: Routes = [
         path: '',
         component: ViewComponentComponent,
       },
-      { path: 'users', component: ViewUserComponent },
-      { path: 'orders', component: ViewOrdersComponent },
-      {path:'orders/:id' , component:ViewOneOrderComponent},
+      { path: 'users', component: ViewUserComponent , canActivate : [AuthGuard] },
+      { path: 'orders', canActivate : [AuthGuard], component: ViewOrdersComponent },
+      {path:'orders/:id' , canActivate : [AuthGuard], component:ViewOneOrderComponent},
       { path: 'view/:id', component: ViewOneComponent },
+
     ],
   },
 ];

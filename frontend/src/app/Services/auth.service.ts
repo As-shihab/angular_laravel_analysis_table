@@ -30,6 +30,10 @@ Signup : any = {
     return this.http.delete(lodata_url+ "Customars/"+ id);
   }
 
+IsAuthenticated(): boolean{
+  const token = localStorage.getItem('user-token');
+  return  token !==null
+}
 
 
 }
